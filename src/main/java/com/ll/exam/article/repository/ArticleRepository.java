@@ -54,4 +54,22 @@ public class ArticleRepository {
         long newId = sql.insert();
         return newId;
     }
+
+    public void modify(long id, String title, String body, boolean isBlind) {
+        SecSql sql = myMap.genSecSql();
+
+        // id가 0, 1, 2, 3인 글 수정
+        // id가 0인 글은 없으니, 실제로는 3개의 글이 삭제됨
+        sql
+                .append("UPDATE article")
+                .append("SET modifiedDate = NOW()")
+                .append(", title = ?", title)
+                .append(", body = ?", body)
+                .append(", isBlind = ?", isBlind)
+                .append("WHERE id = ?", id);
+
+
+        // 수정된 row 개수
+        sql.update();
+    }
 }
