@@ -21,4 +21,22 @@ public class ArticleRepository {
                 .append("ORDER BY id DESC");
         return sql.selectRows(ArticleDto.class);
     }
+
+    public ArticleDto getArticleById(long id) {
+        SecSql sql = myMap.genSecSql();
+        sql
+                .append("SELECT * FROM article WHERE id = 1");
+        ArticleDto articleDto = sql.selectRow(ArticleDto.class);
+        return  articleDto;
+    }
+
+    public long getArticlesCount() {
+        SecSql sql = myMap.genSecSql();
+        sql
+                .append("SELECT COUNT(*)")
+                .append("FROM article");
+
+        Long count = sql.selectLong();
+        return count;
+    }
 }
