@@ -72,4 +72,18 @@ public class ArticleRepository {
         // 수정된 row 개수
         sql.update();
     }
+
+    public void delete(long id) {
+        SecSql sql = myMap.genSecSql();
+
+        // id가 0, 1, 3인 글 삭제
+        // id가 0인 글은 없으니, 실제로는 2개의 글이 삭제됨
+        sql
+                .append("DELETE")
+                .append("FROM article")
+                .append("WHERE id = ?", id);
+
+        // 삭제된 row 개수
+        sql.delete();
+    }
 }

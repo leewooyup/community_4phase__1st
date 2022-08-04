@@ -112,6 +112,14 @@ public class ArticleServiceTest {
         assertThat(articleDto.getBody()).isEqualTo("내용 new");
         assertThat(articleDto.isBlind()).isEqualTo(true);
     }
+
+    @Test
+    public void delete() {
+        ArticleService articleService = Container.getObj(ArticleService.class);
+        articleService.delete(1);
+        ArticleDto articleDto = articleService.getArticleById(1);
+        assertThat(articleDto).isNull();
+    }
 }
 
 
