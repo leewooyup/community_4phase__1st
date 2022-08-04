@@ -8,6 +8,7 @@ import com.ll.exam.mymap.SecSql;
 
 import java.util.List;
 
+
 @Repository
 public class ArticleRepository {
     @Autowired
@@ -25,7 +26,7 @@ public class ArticleRepository {
     public ArticleDto getArticleById(long id) {
         SecSql sql = myMap.genSecSql();
         sql
-                .append("SELECT * FROM article WHERE id = 1");
+                .append("SELECT * FROM article WHERE id = ?", id);
         ArticleDto articleDto = sql.selectRow(ArticleDto.class);
         return  articleDto;
     }
@@ -38,5 +39,19 @@ public class ArticleRepository {
 
         Long count = sql.selectLong();
         return count;
+    }
+
+    public long write(String title, String body, boolean isBool) {
+        SecSql sql = myMap.genSecSql();
+        sql
+                .append("INSERT INTO article")
+                .append("SET createdDate = NOW()")
+                .append(", modifiedDate = NOW()")
+                .append(", title = ?", title)
+                .append(", body = ?", body)
+                .append(", isBlind = ?", isBool);
+
+        long newId = sql.insert();
+        return newId;
     }
 }
